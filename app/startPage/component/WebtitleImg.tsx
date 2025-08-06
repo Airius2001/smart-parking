@@ -11,7 +11,7 @@ export default function WebtitleImg() {
         minHeight: "100vh",
       }}
     >
-      {/* Logo 图片 */}
+      {/* Logo */}
       <Box
         sx={{
           position: "absolute",
@@ -33,7 +33,7 @@ export default function WebtitleImg() {
         />
       </Box>
 
-      {/* 文字标题 */}
+      {/* title */}
       <Box
         sx={{
           position: "absolute",

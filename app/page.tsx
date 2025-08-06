@@ -1,20 +1,17 @@
 "use client";
 
-import { Box, Button, Typography } from "@mui/material";
-import LeftImagePanel from "./home/component/LeftImgPannel";
-import WebtitleImg from "./home/component/WebtitleImg";
+import { Box, Button, Typography, useTheme } from "@mui/material";
+import LeftImagePanel from "./startPage/component/LeftImgPannel";
+import WebtitleImg from "./startPage/component/WebtitleImg";
 import { useRouter } from "next/navigation";
 import { Fade, Grow } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-
-  // Control the state of animation display
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // Trigger animation after the component is loaded
     setShow(true);
   }, []);
 
@@ -25,75 +22,95 @@ export default function Home() {
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
         minHeight: "100vh",
+        px: 2,
+        py: 4,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "center",
       }}
     >
-      {/* Website name and website logo - Add Fade animation*/}
+      {/*  Webtitle */}
       <Fade in={show} timeout={1000}>
-        <div>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            mb: 4,
+            marginTop: "-750px",
+          }}
+        >
           <WebtitleImg />
-        </div>
-      </Fade>
-
-      {/* Left image - Add Grow animation */}
-      <Grow in={show} timeout={1000}>
-        <Box sx={{ marginRight: "20px", position: "absolute", right: 1100 }}>
-          <LeftImagePanel imageSrc="/next.svg" altText="Next.js Logo" />
         </Box>
-      </Grow>
-
-      {/* Right side introduces the website area - add fade animation */}
-      <Fade in={show} timeout={1500}>
-        <Typography
-          variant="h3"
-          component="h2"
-          sx={{
-            position: "absolute",
-            top: 250,
-            right: 600,
-          }}
-        >
-          Xtreme Parking System
-        </Typography>
       </Fade>
 
-      <Fade in={show} timeout={2000}>
-        <Typography
-          variant="h6"
-          component="h2"
-          sx={{
-            position: "absolute",
-            top: 350,
-            width: 700,
-            right: 400,
-          }}
-        >
-          Finding a parking spot in Melbourne’s busy CBD can be frustrating and
-          time-consuming. Our smart parking system makes it easier for commuters
-          and drivers by providing real-time availability, predictive insights,
-          and timely notifications. Whether you're planning ahead or looking for
-          a spot on the go, our platform helps you save time, avoid fines, and
-          park with confidence.
-        </Typography>
-      </Fade>
+      {/* left logo and brief intro */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          maxWidth: 1200,
+        }}
+      >
+        {/* logo part */}
+        <Grow in={show} timeout={1000}>
+          <Box sx={{ width: { xs: "80%", md: "30%" } }}>
+            <LeftImagePanel imageSrc="/next.svg" altText="Next.js Logo" />
+          </Box>
+        </Grow>
 
-      {/* Button - Add Grow Animation */}
-      <Grow in={show} timeout={2500}>
-        <Button
-          variant="contained"
-          onClick={handleClick}
-          sx={{
-            position: "absolute",
-            top: 550,
-            right: 920,
-          }}
-        >
-          Let's get started
-        </Button>
-      </Grow>
+        {/* intro part */}
+        <Fade in={show} timeout={1500}>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "50%" },
+              display: "flex",
+              flexDirection: "column",
+              alignItems: { xs: "center", md: "flex-start" },
+              textAlign: { xs: "center", md: "left" },
+              gap: 3,
+            }}
+          >
+            <Typography
+              variant="h4"
+              sx={{
+                fontFamily: "Arial, sans-serif",
+                fontWeight: "bold",
+                fontStyle: "italic",
+              }}
+            >
+              Xtreme Parking System
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: { xs: "1rem", md: "1.125rem" },
+                maxWidth: 600,
+              }}
+            >
+              Finding a parking spot in Melbourne’s busy CBD can be frustrating
+              and time-consuming. Our smart parking system makes it easier by
+              providing real-time availability, predictive insights, and
+              notifications. Save time, avoid fines, and park with confidence.
+            </Typography>
+
+            <Grow in={show} timeout={2000}>
+              <Button
+                variant="contained"
+                onClick={handleClick}
+                sx={{ mt: 2, px: 4 }}
+              >
+                Let's get started
+              </Button>
+            </Grow>
+          </Box>
+        </Fade>
+      </Box>
     </Box>
   );
 }
