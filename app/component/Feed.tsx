@@ -7,11 +7,11 @@ import { Box, Typography } from "@mui/material";
 // import Analytics from "../SidebarElement/Dashboard/Analytics";
 
 interface FeedProps {
-  activeTab: string; // 当前选中的菜单项标识
+  activeTab: string; // The currently selected menu item identifier
 }
 
 export default function Feed({ activeTab }: FeedProps) {
-  // 根据 activeTab 渲染不同内容
+  // Render different content based on activeTab
   const renderContent = () => {
     switch (activeTab) {
       case "default":
