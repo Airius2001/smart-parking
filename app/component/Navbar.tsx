@@ -11,6 +11,17 @@ import Image from "next/image";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import React from "react";
+import { ListItemButton } from "@mui/material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -18,6 +29,15 @@ const StyledToolBar = styled(Toolbar)({
 });
 
 export default function Navbar() {
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  const toggleDrawer = (open: boolean) => () => {
+    setDrawerOpen(open);
+  };
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <AppBar position="sticky">
       <StyledToolBar>
@@ -48,20 +68,78 @@ export default function Navbar() {
           </Typography>
         </Box>
 
-        <Box>
-          <Button startIcon={<HomeIcon />} sx={{ color: "white" }}>
-            Home
-          </Button>
-          <Button startIcon={<InfoIcon />} sx={{ color: "white" }}>
-            About
-          </Button>
-          <Button
-            startIcon={<ConnectWithoutContactIcon />}
-            sx={{ color: "white" }}
+        {isMobile ? (
+          <IconButton
+            color="inherit"
+            edge="end"
+            onClick={toggleDrawer(true)}
+            sx={{ display: { xs: "block", sm: "none" } }}
           >
-            Contact
-          </Button>
-        </Box>
+            <MoreHorizIcon />
+          </IconButton>
+        ) : (
+          <Box>
+            <Button startIcon={<HomeIcon />} sx={{ color: "white" }}>
+              Home
+            </Button>
+            <Button startIcon={<InfoIcon />} sx={{ color: "white" }}>
+              About
+            </Button>
+            <Button
+              startIcon={<ConnectWithoutContactIcon />}
+              sx={{ color: "white" }}
+            >
+              Contact Us
+            </Button>
+          </Box>
+        )}
+
+        <Drawer
+          anchor="right"
+          open={drawerOpen}
+          onClose={toggleDrawer(false)}
+          PaperProps={{
+            sx: { width: 150, top: "60px", position: "fixed" },
+          }}
+        >
+          <List>
+            {/* home */}
+            <ListItem disablePadding>
+              <ListItemButton
+                component="a"
+                href="#Home"
+                onClick={toggleDrawer(false)}
+              >
+                <HomeIcon sx={{ mr: 1 }} />
+                <ListItemText primary="Home" />
+              </ListItemButton>
+            </ListItem>
+
+            {/* About */}
+            <ListItem disablePadding>
+              <ListItemButton
+                component="a"
+                href="#About"
+                onClick={toggleDrawer(false)}
+              >
+                <InfoIcon sx={{ mr: 1 }} />
+                <ListItemText primary="About" />
+              </ListItemButton>
+            </ListItem>
+
+            {/* Contact Us */}
+            <ListItem disablePadding>
+              <ListItemButton
+                component="a"
+                href="#ContactUs"
+                onClick={toggleDrawer(false)}
+              >
+                <ConnectWithoutContactIcon sx={{ mr: 1 }} />
+                <ListItemText primary="Contact Us" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Drawer>
       </StyledToolBar>
     </AppBar>
   );

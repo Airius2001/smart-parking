@@ -139,12 +139,20 @@ export default function Sidebar({ mode, setMode, setActiveTab }: SidebarProps) {
         ModalProps={{
           keepMounted: true,
         }}
-        sx={{
-          "& .MuiDrawer-paper": {
-            width: 300,
-            boxSizing: "border-box",
-            position: "relative",
-          },
+        PaperProps={{
+          sx: isMobile
+            ? {
+                width: 300,
+                boxSizing: "border-box",
+                position: "fixed",
+                top: "60px",
+                height: "calc(100% - 60px)",
+              }
+            : {
+                width: 300,
+                boxSizing: "border-box",
+                position: "relative",
+              },
         }}
       >
         {drawerContent}
