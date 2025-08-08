@@ -19,6 +19,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Groups3Icon from "@mui/icons-material/Groups3";
 import LocalParkingIcon from "@mui/icons-material/LocalParking";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 
 interface SidebarProps {
   mode: string;
@@ -84,7 +85,11 @@ export default function Sidebar({ mode, setMode, setActiveTab }: SidebarProps) {
 
           {/* population growth button */}
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#PopulationGrowth">
+            <ListItemButton
+              component="a"
+              href="#PopulationGrowth"
+              onClick={() => setActiveTab("PopulationGrowth")}
+            >
               <ListItemIcon>
                 <Groups3Icon sx={{ color: getIconColor() }} />
               </ListItemIcon>
@@ -94,11 +99,29 @@ export default function Sidebar({ mode, setMode, setActiveTab }: SidebarProps) {
 
           {/* parking availability */}
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#ParkingAvailability">
+            <ListItemButton
+              component="a"
+              href="#ParkingAvailability"
+              onClick={() => setActiveTab("ParkingAvailability")}
+            >
               <ListItemIcon>
                 <LocalParkingIcon sx={{ color: getIconColor() }} />
               </ListItemIcon>
               <ListItemText primary="Parking Availability" />
+            </ListItemButton>
+          </ListItem>
+
+          {/* parking alarm */}
+          <ListItem disablePadding>
+            <ListItemButton
+              component="a"
+              href="#ParkingAlarm"
+              onClick={() => setActiveTab("ParkingAlarm")}
+            >
+              <ListItemIcon>
+                <AccessAlarmIcon sx={{ color: getIconColor() }} />
+              </ListItemIcon>
+              <ListItemText primary="parking Alarm" />
             </ListItemButton>
           </ListItem>
 

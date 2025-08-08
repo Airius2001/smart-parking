@@ -1,10 +1,8 @@
 import { Box, Typography } from "@mui/material";
-// import List from "../SidebarElement/User/List"
-// import Profile from "../SidebarElement/User/Profile";
-// import Company from "../SidebarElement/Company";
-// import Create from "../SidebarElement/User/Create";
-// import Default from "../SidebarElement/Dashboard/Default";
-// import Analytics from "../SidebarElement/Dashboard/Analytics";
+import CarOwnership from "../homePage/sidebarElement/carOwnership";
+import PopulationGrowth from "../homePage/sidebarElement/populationGrowth";
+import ParkingAvailability from "../homePage/sidebarElement/parkingAvailability";
+import ParkingAlarm from "../homePage/sidebarElement/parkingAlarm";
 
 interface FeedProps {
   activeTab: string; // The currently selected menu item identifier
@@ -14,24 +12,14 @@ export default function Feed({ activeTab }: FeedProps) {
   // Render different content based on activeTab
   const renderContent = () => {
     switch (activeTab) {
-      case "default":
-        return <Typography>Select a menu item to view content</Typography>;
-      // <Default />
-      case "profile":
-        return 132;
-      // <Profile />
-      case "create":
-        return 123;
-      // <Create />
-      case "list":
-        return 123;
-      // <List />
-      case "company":
-        return 123;
-      // <Company />
-      case "analytics":
-        return 123;
-      // <Analytics />
+      case "CarOwnership":
+        return <CarOwnership />;
+      case "PopulationGrowth":
+        return <PopulationGrowth />;
+      case "ParkingAvailability":
+        return <ParkingAvailability />;
+      case "ParkingAlarm":
+        return <ParkingAlarm />;
       default:
         return <Typography>Select a menu item to view content</Typography>;
     }
