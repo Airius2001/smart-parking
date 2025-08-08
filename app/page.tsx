@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Button, Typography, useTheme } from "@mui/material";
-import LeftImagePanel from "./startPage/component/LeftImgPannel";
-import WebtitleImg from "./startPage/component/WebtitleImg";
+import LeftImagePanel from "./component/LeftImgPannel";
+import WebtitleImg from "./component/WebtitleImg";
 import { useRouter } from "next/navigation";
 import { Fade, Grow } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ export default function Home() {
   }, []);
 
   const handleClick = () => {
-    router.push("/login");
+    router.push("/homePage");
   };
 
   return (
