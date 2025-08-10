@@ -1,4 +1,5 @@
 import PopulationChart from '@/app/component/PopulationChart';
+import PopulationTable from '@/app/component/PopulationTable';
 import populationData from '@/public/data/population.json';
 import Link from 'next/link';
 
@@ -19,27 +20,31 @@ export default function PopulationPage() {
 
         {/* Top: Back to Home Page & Title*/}
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-extrabold tracking-tight">Melbourne Population Trend</h1>
+          <h1 
+            className="text-3xl font-extrabold tracking-tight"
+            style={{ textAlign: "center" }}
+          >Melbourne Population Growth</h1>
+          <br/>
           {/* <Link href="/" className="text-sm underline opacity-80 hover:opacity-100">
             Back to Home
           </Link> */}
+          <p className="mt-2 text-sm text-gray-200 leading-relaxed">
+            Melbourne's CBD is a vibrant hub of business, culture, and daily commuting. 
+            Every morning, thousands of residents and workers flood into the city, competing for 
+            limited road space, parking spots, and public transport seats. As the population steadily 
+            grows, the pressure on Melbourne's transport infrastructure is mounting, making it crucial 
+            for planners and policymakers to anticipate and address these challenges before congestion 
+            reaches critical levels.
+          </p>
+          <br/>
         </div>
 
-        {/* KPI Part */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-2xl bg-zinc-900/70 p-5 shadow">
-            <div className="text-sm opacity-70">Population in 2020</div>
-            <div className="text-2xl font-semibold">{format(first)}</div>
-          </div>
-          <div className="rounded-2xl bg-zinc-900/70 p-5 shadow">
-            <div className="text-sm opacity-70">Population in 2024</div>
-            <div className="text-2xl font-semibold">{format(last)}</div>
-          </div>
-          <div className="rounded-2xl bg-zinc-900/70 p-5 shadow">
-            <div className="text-sm opacity-70">Increase (2020-2024)</div>
-            <div className="text-2xl font-semibold">+{format(delta)}</div>
-            <div className="text-xs opacity-70 mt-1">CAGR = {(cagr * 100).toFixed(2)}%</div>
-          </div>
+        {/* Population Table */}
+        <div className="rounded-2xl bg-zinc-900/70 p-6 shadow">
+          <PopulationTable
+            data={populationData}
+          />
+          <br/>
         </div>
 
         {/* Main card: left picture and right text (the small screen is changed to up and down) */}
@@ -49,65 +54,96 @@ export default function PopulationPage() {
           </div>
 
           <div className="space-y-4">
+            <br/>
             <h2 className="text-xl font-semibold">Summary</h2>
-            <p>
+            <br/>
+            <p className="pl-4">
               According to the official Australian Bureau of Statistics (ABS) data, the Melbourne CBD population is
               projected to grow steadily from <strong>5,061,107</strong> in 2020 to <strong>5,350,705</strong> in 2025,
               representing a total increase of <strong>289,598 people</strong> over five years. This translates to an
-              <strong> average annual growth rate of approximately 1.13%</strong>.
+              <strong> average annual growth rate of approximately 1.13%</strong>, 
+              which is expected to significantly increase road usage, public transport demand, and parking competition in the city.
             </p>
+            <br/>
 
-            <p>
+            <p className="pl-4 mt-2">
               The growth trend shows a slight dip in 2021, likely reflecting the impacts of the COVID-19 pandemic,
               followed by a consistent upward trajectory in subsequent years. Such population growth will likely result in:
             </p>
+            
 
-            <ul className="list-disc pl-6 space-y-2">
+            <ul
+              className="list-disc pl-6 mt-2 space-y-2 leading-relaxed"
+              style={{
+                paddingLeft:'1.5rem', marginTop:'8px',
+                listStyleType: 'disc',
+              }}
+            >
+              <style jsx>{`
+                ul li::marker {
+                  color: #3b82f6; 
+                }
+              `}</style>
+
               <li>
-                <strong>Increased demand for road usage</strong>, leading to heavier peak-hour congestion.
+                <span className="font-semibold text-white">Increased demand for road usage</span>, leading to heavier peak-hour congestion.
               </li>
               <li>
-                <strong>Higher competition for limited parking spaces</strong>, particularly in commercial and high-density
-                residential zones.
+                <span className="font-semibold text-white">Higher competition for limited parking spaces</span>, particularly in commercial and high-density residential zones.
               </li>
               <li>
-                <strong>Additional strain on public transport systems</strong>, requiring capacity upgrades.
+                <span className="font-semibold text-white">Additional strain on public transport systems</span>, requiring capacity upgrades.
               </li>
               <li>
-                <strong>Greater pressure on urban infrastructure</strong>, including roads, pedestrian networks, and cycling lanes.
+                <span className="font-semibold text-white">Greater pressure on urban infrastructure</span>, including roads, pedestrian networks, and cycling lanes.
               </li>
             </ul>
-
-            <p>
+            <br/>
+            <p className="pl-4 mt-2">
               Understanding this trend is essential for urban planners, transport authorities, and policymakers to anticipate
               future challenges and implement proactive measures such as <strong>smart parking systems</strong>,{" "}
               <strong>congestion management strategies</strong>, and <strong>sustainable mobility solutions</strong>.
             </p>
+            
+            {/* data source */}
+            <p className="text-xs opacity-70 mt-2">
+              <br/>
+              Source: ABS Data by Region - Greater Melbourne (GCCSA: 2GMEL). Values are Estimated Resident Population (ERP).
+              <br/>
+              <br/>
+            </p>
 
-            {/* little button */}
-            <div className="flex gap-3 pt-2">
+            <div className="flex flex-col gap-2 pt-2">
               <a
-                href="/data/population.json"
-                download
-                className="text-sm rounded-lg bg-zinc-800 px-3 py-2 hover:bg-zinc-700"
-              >
-                Download JSON
-              </a>
-              <a
-                href="https://www.abs.gov.au/"
+                href="https://dbr.abs.gov.au/region.html?lyr=gccsa&rgn=2GMEL"
                 target="_blank"
-                className="text-sm rounded-lg bg-zinc-800 px-3 py-2 hover:bg-zinc-700"
+                className="text-sm text-blue-600 underline hover:text-blue-800"
+                style={{ color: "#2563eb", textDecoration: "underline", fontSize: "0.875rem", whiteSpace: "nowrap" }}
               >
                 ABS Source
               </a>
+              <a> / </a>
+              <a
+                href="/data/population.json"
+                download
+                style={{
+                  fontSize: "0.875rem",
+                  backgroundColor: "#2563eb",
+                  color: "white",
+                  borderRadius: "0.5rem",
+                  padding: "0.25rem 0.75rem",
+                  textDecoration: "none",
+                  whiteSpace: "nowrap"
+                }}
+              >
+                Download JSON
+              </a>
+              
             </div>
           </div>
         </div>
 
-        {/* data source */}
-        <p className="text-xs opacity-70">
-          Source: ABS Data by Region - Greater Melbourne (GCCSA: 2GMEL). Values are Estimated Resident Population (ERP).
-        </p>
+        
       </div>
     </main>
   );
