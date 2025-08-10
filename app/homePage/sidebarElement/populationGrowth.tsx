@@ -16,7 +16,11 @@ export default function PopulationPage() {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
+      
+      <div 
+        className="max-w-6xl mx-auto px-6 py-10 space-y-8"
+        style={{ padding: '40px', boxSizing: 'border-box' }}
+      >
 
         {/* Top: Back to Home Page & Title*/}
         <div className="flex items-center justify-between">
