@@ -1,14 +1,29 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  CategoryScale, LinearScale, PointElement, LineElement,
-  Title, Tooltip, Legend, Filler,
-} from 'chart.js';
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 type Row = { year: number; population: number };
 
@@ -19,7 +34,7 @@ type Props = {
 };
 
 export default function PopulationChart({
-  title = 'Greater Melbourne ERP (2020-2024)',
+  title = "Greater Melbourne Estimated Resident Population (2020-2024)",
   height = 420,
   showLegend = true,
 }: Props) {
@@ -29,21 +44,23 @@ export default function PopulationChart({
   useEffect(() => {
     (async () => {
       try {
-        const r = await fetch('/data/population.json', { cache: 'no-store' });
+        const r = await fetch("/data/population.json", { cache: "no-store" });
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         const data: Row[] = await r.json();
         setRows(data);
       } catch (e: any) {
-        setErr(e.message || 'Failed to load data');
+        setErr(e.message || "Failed to load data");
         setRows([]);
       }
     })();
   }, []);
 
   if (rows === null) {
-    // Loading skeleton
     return (
-      <div className="rounded-2xl bg-zinc-900/70 animate-pulse" style={{ height }} />
+      <div
+        className="rounded-2xl bg-zinc-900/70 animate-pulse"
+        style={{ height }}
+      />
     );
   }
   if (err) {
@@ -54,46 +71,66 @@ export default function PopulationChart({
     );
   }
 
-  const labels = rows.map(r => r.year.toString());
-  const values = rows.map(r => r.population);
+  const labels = rows.map((r) => r.year.toString());
+  const values = rows.map((r) => r.population);
 
   const data = {
     labels,
-    datasets: [{
-      label: 'Population',
-      data: values,
-      borderColor: 'rgba(0, 123, 255, 1)', 
-backgroundColor: 'rgba(0, 123, 255, 0.15)', 
-      pointRadius: 3,
-      pointHoverRadius: 5,
-      tension: 0.25,
-      fill: true,
-    }],
+    datasets: [
+      {
+        label: "Population",
+        data: values,
+        borderColor: "rgba(0, 123, 255, 1)",
+        backgroundColor: "rgba(0, 123, 255, 0.15)",
+        pointRadius: 3,
+        pointHoverRadius: 5,
+        tension: 0.25,
+        fill: true,
+      },
+    ],
   };
 
   const options: any = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: showLegend, position: 'top' },
-      title: { display: true, text: title },
+      legend: {
+        display: showLegend,
+        position: "top",
+        labels: {
+          color: "#ffffff", // legend
+        },
+      },
+      title: {
+        display: true,
+        text: title,
+        font: {
+          size: 20,
+          weight: "bold",
+        },
+        color: "#ffffff", // Title
+      },
       tooltip: {
+        titleColor: "#111827", // tooltip
+        bodyColor: "#111827",
+        backgroundColor: "rgba(255,255,255,0.95)",
         callbacks: {
-          label: (ctx: any) => ` ${ctx.dataset.label}: ${Number(ctx.parsed.y).toLocaleString()}`,
+          label: (ctx: any) =>
+            ` ${ctx.dataset.label}: ${Number(ctx.parsed.y).toLocaleString()}`,
         },
       },
     },
     scales: {
       x: {
-      grid: { color: 'rgba(0,0,0,0.1)' }, // light black
-      ticks: { color: 'rgba(0,0,0,0.8)' }, // dark blacj
-    },
-    y: {
-      grid: { color: 'rgba(0,0,0,0.1)' }, 
-      ticks: {
-        color: 'rgba(0,0,0,0.8)', 
+        ticks: { color: "#ffffff" },
+        grid: { color: "rgba(255,255,255,0.12)" },
+      },
+      y: {
+        ticks: {
+          color: "#ffffff",
           callback: (v: any) => Number(v).toLocaleString(),
         },
+        grid: { color: "rgba(255,255,255,0.12)" },
         beginAtZero: false,
       },
     },

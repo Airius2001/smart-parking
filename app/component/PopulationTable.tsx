@@ -1,4 +1,6 @@
-'use client';
+"use client";
+
+import { useState } from "react";
 
 type Row = { year: number; population: number };
 
@@ -13,138 +15,201 @@ function fmt(n: number) {
   return n.toLocaleString();
 }
 function fmtPct(n: number) {
-  const sign = n > 0 ? '+' : n < 0 ? '' : '';
+  const sign = n > 0 ? "+" : n < 0 ? "" : "";
   return `${sign}${(n * 100).toFixed(2)}%`;
 }
 
 export default function PopulationTable({
   data,
-  className = '',
+  className = "",
   showTotal = true,
   title,
 }: Props) {
-  const sorted = [...data].sort((a, b) => a.year - b.year);
+  const [sortKey, setSortKey] = useState<"year" | "population" | "growth">(
+    "year"
+  );
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  const yoy = sorted.map((row, i) => {
-    if (i === 0) return undefined;
-    const prev = sorted[i - 1].population;
-    return (row.population - prev) / prev;
+  const sortedByYear = [...data].sort((a, b) => a.year - b.year);
+
+  const rows = sortedByYear.map((row, i) => {
+    if (i === 0) return { ...row, growth: undefined as number | undefined };
+    const prev = sortedByYear[i - 1].population;
+    const g = (row.population - prev) / prev;
+    return { ...row, growth: g };
   });
 
-  const first = sorted[0]?.population ?? 0;
-  const last = sorted[sorted.length - 1]?.population ?? 0;
+  const first = rows[0]?.population ?? 0;
+  const last = rows[rows.length - 1]?.population ?? 0;
   const totalIncrease = last - first;
-  const periods = Math.max(sorted.length - 1, 1);
+  const periods = Math.max(rows.length - 1, 1);
   const cagr = first > 0 ? Math.pow(last / first, 1 / periods) - 1 : 0;
+
+  const displayRows = [...rows].sort((a, b) => {
+    const av =
+      sortKey === "growth"
+        ? a.growth ?? Number.NEGATIVE_INFINITY
+        : (a as any)[sortKey];
+    const bv =
+      sortKey === "growth"
+        ? b.growth ?? Number.NEGATIVE_INFINITY
+        : (b as any)[sortKey];
+    if (av === bv) return 0;
+    return sortOrder === "asc" ? (av > bv ? 1 : -1) : av < bv ? 1 : -1;
+  });
+
+  const handleSort = (key: "year" | "population" | "growth") => {
+    if (sortKey === key) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(key);
+      setSortOrder("asc");
+    }
+  };
+
+  const arrow = (key: "year" | "population" | "growth") =>
+    sortKey === key
+      ? sortOrder === "asc"
+        ? " (Ascending order) "
+        : " (Descending order) "
+      : "";
 
   return (
     <div className={className}>
       {title && (
         <h3
           style={{
-            fontSize: '1.125rem',
+            fontSize: "1.125rem",
             fontWeight: 600,
-            marginBottom: '0.5rem',
+            marginBottom: "0.5rem",
           }}
         >
           {title}
         </h3>
       )}
+
       <table
         style={{
-          width: '100%',
-          borderCollapse: 'collapse',
-          border: '2px solid #4b5563', // gray-600
-          fontSize: '0.875rem',
-          textAlign: 'left',
+          width: "100%",
+          borderCollapse: "collapse",
+          border: "2px solid #4b5563",
+          fontSize: "0.875rem",
+          textAlign: "left",
+          userSelect: "none",
         }}
       >
         <thead>
-          <tr style={{ backgroundColor: '#e5e7eb', color: 'black' }}>
+          <tr
+            style={{
+              backgroundColor: "rgba(33, 150, 243, 0.85)",
+              color: "black",
+            }}
+          >
             <th
+              onClick={() => handleSort("year")}
               style={{
-                border: '1px solid #4b5563',
-                padding: '0.5rem 0.75rem',
+                border: "1px solid #4b5563",
+                padding: "0.5rem 0.75rem",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
               }}
+              title="Sort by year"
             >
-              Year
+              Year{arrow("year")}
             </th>
             <th
+              onClick={() => handleSort("population")}
               style={{
-                border: '1px solid #4b5563',
-                padding: '0.5rem 0.75rem',
+                border: "1px solid #4b5563",
+                padding: "0.5rem 0.75rem",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
               }}
+              title="Sort by population"
             >
-              Population
+              Population{arrow("population")}
             </th>
             <th
+              onClick={() => handleSort("growth")}
               style={{
-                border: '1px solid #4b5563',
-                padding: '0.5rem 0.75rem',
+                border: "1px solid #4b5563",
+                padding: "0.5rem 0.75rem",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
               }}
+              title="Sort by YoY growth"
             >
-              YoY Growth
+              YoY Growth{arrow("growth")}
             </th>
           </tr>
         </thead>
+
         <tbody>
-          {sorted.map((row, i) => (
+          {displayRows.map((row, i) => (
             <tr
               key={row.year}
               style={{
-                backgroundColor: i % 2 === 1 ? 'rgba(0,0,0,0.1)' : 'transparent',
+                backgroundColor:
+                  i % 2 === 1 ? "rgba(0,0,0,0.1)" : "transparent",
               }}
             >
               <td
                 style={{
-                  border: '1px solid #4b5563',
-                  padding: '0.5rem 0.75rem',
+                  border: "1px solid #4b5563",
+                  padding: "0.5rem 0.75rem",
                 }}
               >
                 {row.year}
               </td>
               <td
                 style={{
-                  border: '1px solid #4b5563',
-                  padding: '0.5rem 0.75rem',
+                  border: "1px solid #4b5563",
+                  padding: "0.5rem 0.75rem",
                 }}
               >
                 {fmt(row.population)}
               </td>
               <td
                 style={{
-                  border: '1px solid #4b5563',
-                  padding: '0.5rem 0.75rem',
+                  border: "1px solid #4b5563",
+                  padding: "0.5rem 0.75rem",
                 }}
               >
-                {i === 0 ? '-' : fmtPct(yoy[i] ?? 0)}
+                {row.growth === undefined ? "-" : fmtPct(row.growth)}
               </td>
             </tr>
           ))}
 
           {showTotal && (
-            <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 600, color: 'black' }}>
+            <tr
+              style={{
+                backgroundColor: "rgba(243, 244, 246, 0.5)",
+                fontWeight: 600,
+                color: "black",
+              }}
+            >
               <td
                 style={{
-                  border: '1px solid #4b5563',
-                  padding: '0.5rem 0.75rem',
+                  border: "1px solid #4b5563",
+                  padding: "0.5rem 0.75rem",
                 }}
               >
-                Total ({sorted[0]?.year ?? ''}-{sorted[sorted.length - 1]?.year ?? ''})
+                Total ({rows[0]?.year ?? ""}-{rows[rows.length - 1]?.year ?? ""}
+                )
               </td>
               <td
                 style={{
-                  border: '1px solid #4b5563',
-                  padding: '0.5rem 0.75rem',
+                  border: "1px solid #4b5563",
+                  padding: "0.5rem 0.75rem",
                 }}
               >
-                {totalIncrease >= 0 ? '+' : ''}
+                {totalIncrease >= 0 ? "+" : ""}
                 {fmt(totalIncrease)}
               </td>
               <td
                 style={{
-                  border: '1px solid #4b5563',
-                  padding: '0.5rem 0.75rem',
+                  border: "1px solid #4b5563",
+                  padding: "0.5rem 0.75rem",
                 }}
               >
                 CAGR = {fmtPct(cagr)}

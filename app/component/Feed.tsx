@@ -26,7 +26,12 @@ export default function Feed({ activeTab }: FeedProps) {
   };
 
   return (
-    <Box bgcolor="lightblue" flex={6} p={2} color="black">
+    <Box
+      bgcolor={activeTab === "PopulationGrowth" ? "transparent" : "lightblue"}
+      flex={10}
+      p={0}
+      color="black"
+    >
       {renderContent()}
     </Box>
   );
