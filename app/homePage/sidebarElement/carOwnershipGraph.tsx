@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Container, Paper, Grid } from "@mui/material";
+import { Box, Typography, Button, Container, Paper } from "@mui/material";
 import Papa from "papaparse";
 import {
   BarChart,
@@ -24,7 +24,6 @@ export default function CarOwnershipGraph({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Read the CSV file in the public folder
     fetch("/data/car_ownership.csv")
       .then((response) => {
         if (!response.ok) throw new Error("Failed to load CSV file");
@@ -130,8 +129,17 @@ export default function CarOwnershipGraph({
           Analysis of traffic congestion causes in Melbourne's CBD
         </Typography>
 
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
+        {/* 替换 Grid 容器 */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 4,
+            mb: 4,
+          }}
+        >
+          {/* 替换第一个 Grid item */}
+          <Box sx={{ width: { xs: "100%", md: "calc(50% - 16px)" } }}>
             <Paper elevation={2} sx={{ p: 3, height: "100%" }}>
               <Typography variant="h6" component="h3" gutterBottom>
                 <strong>Overall Trend</strong>
@@ -147,9 +155,10 @@ export default function CarOwnershipGraph({
                 during the pandemic.
               </Typography>
             </Paper>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} md={6}>
+          {/* 替换第二个 Grid item */}
+          <Box sx={{ width: { xs: "100%", md: "calc(50% - 16px)" } }}>
             <Paper elevation={2} sx={{ p: 3, height: "100%" }}>
               <Typography variant="h6" component="h3" gutterBottom>
                 <strong>Possible Causes of Traffic Congestion</strong>
@@ -197,26 +206,27 @@ export default function CarOwnershipGraph({
                 </Box>
               </Box>
             </Paper>
-          </Grid>
+          </Box>
+        </Box>
 
-          <Grid item xs={12}>
-            <Paper elevation={2} sx={{ p: 3 }}>
-              <Typography variant="h6" component="h3" gutterBottom>
-                <strong>Key problems</strong>
-              </Typography>
-              <Typography paragraph>
-                The increase in vehicle ownership is a key factor in Melbourne
-                CBD's traffic congestion, especially during the 2016-2018 growth
-                period that stressed urban infrastructure.
-              </Typography>
-              <Typography>
-                Addressing congestion requires simultaneous improvements in
-                public transport, promotion of green travel, and enhanced road
-                planning with smart traffic management systems.
-              </Typography>
-            </Paper>
-          </Grid>
-        </Grid>
+        {/* 替换全宽的 Grid item */}
+        <Box sx={{ width: "100%", mb: 4 }}>
+          <Paper elevation={2} sx={{ p: 3 }}>
+            <Typography variant="h6" component="h3" gutterBottom>
+              <strong>Key problems</strong>
+            </Typography>
+            <Typography paragraph>
+              The increase in vehicle ownership is a key factor in Melbourne
+              CBD's traffic congestion, especially during the 2016-2018 growth
+              period that stressed urban infrastructure.
+            </Typography>
+            <Typography>
+              Addressing congestion requires simultaneous improvements in public
+              transport, promotion of green travel, and enhanced road planning
+              with smart traffic management systems.
+            </Typography>
+          </Paper>
+        </Box>
 
         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <Button
