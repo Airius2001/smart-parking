@@ -3,23 +3,27 @@ import CarOwnership from "../homePage/sidebarElement/carOwnership";
 import PopulationGrowth from "../homePage/sidebarElement/populationGrowth";
 import ParkingAvailability from "../homePage/sidebarElement/parkingAvailability";
 import ParkingAlarm from "../homePage/sidebarElement/parkingAlarm";
+import CarOwnershipGraph from "../homePage/sidebarElement/carOwnershipGraph";
 
 interface FeedProps {
   activeTab: string; // The currently selected menu item identifier
+  setActiveTab: (tab: string) => void;
 }
 
-export default function Feed({ activeTab }: FeedProps) {
+export default function Feed({ activeTab, setActiveTab }: FeedProps) {
   // Render different content based on activeTab
   const renderContent = () => {
     switch (activeTab) {
       case "CarOwnership":
-        return <CarOwnership />;
+        return <CarOwnership setActiveTab={setActiveTab} />;
       case "PopulationGrowth":
         return <PopulationGrowth />;
       case "ParkingAvailability":
         return <ParkingAvailability />;
       case "ParkingAlarm":
         return <ParkingAlarm />;
+      case "carOwnershipGraph":
+        return <CarOwnershipGraph setActiveTab={setActiveTab} />;
       default:
         return <Typography>Select a menu item to view content</Typography>;
     }

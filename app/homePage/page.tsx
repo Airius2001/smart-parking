@@ -14,7 +14,7 @@ export default function Dashboard() {
       mode: mode === "dark" ? "dark" : "light", // Ensure that the value is 'light' or 'dark'.
     },
   });
-  const [activeTab, setActiveTab] = useState("default"); // Default selected list
+  const [activeTab, setActiveTab] = useState("CarOwnership"); // Default selected list
 
   return (
     <ThemeProvider theme={theme}>
@@ -33,7 +33,7 @@ export default function Dashboard() {
           sx={{ pt: 2 }}
         >
           <Sidebar setMode={setMode} mode={mode} setActiveTab={setActiveTab} />
-          <Feed activeTab={activeTab} />
+          <Feed activeTab={activeTab} setActiveTab={setActiveTab} />
         </Stack>
       </Box>
     </ThemeProvider>
