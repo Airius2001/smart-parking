@@ -31,10 +31,11 @@ export default function CarOwnershipGraph({
         return response.text();
       })
       .then((csvText) => {
-        const parsed = Papa.parse(csvText, {
+        const parsed = Papa.parse<CarOwnershipData>(csvText, {
           header: true,
           skipEmptyLines: true,
         });
+
         if (
           parsed.data.length > 0 &&
           "Year" in parsed.data[0] &&
