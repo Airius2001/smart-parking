@@ -16,7 +16,11 @@ export default function CarOwnershipGraph({
 }: {
   setActiveTab: (tab: string) => void;
 }) {
-  const [data, setData] = useState<any[]>([]);
+  type CarOwnershipData = {
+    Year: string;
+    CarOwnershipCount: number;
+  };
+  const [data, setData] = useState<CarOwnershipData[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {

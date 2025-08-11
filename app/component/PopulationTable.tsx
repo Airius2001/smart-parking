@@ -46,14 +46,20 @@ export default function PopulationTable({
   const cagr = first > 0 ? Math.pow(last / first, 1 / periods) - 1 : 0;
 
   const displayRows = [...rows].sort((a, b) => {
+    type RowWithGrowth = Row & { growth?: number };
+
+    const rows: RowWithGrowth[] = sortedByYear.map((row, i) => {
+      if (i === 0) return { ...row, growth: undefined };
+      const prev = sortedByYear[i - 1].population;
+      const g = (row.population - prev) / prev;
+      return { ...row, growth: g };
+    });
+
     const av =
-      sortKey === "growth"
-        ? a.growth ?? Number.NEGATIVE_INFINITY
-        : (a as any)[sortKey];
+      sortKey === "growth" ? a.growth ?? Number.NEGATIVE_INFINITY : a[sortKey];
     const bv =
-      sortKey === "growth"
-        ? b.growth ?? Number.NEGATIVE_INFINITY
-        : (b as any)[sortKey];
+      sortKey === "growth" ? b.growth ?? Number.NEGATIVE_INFINITY : b[sortKey];
+
     if (av === bv) return 0;
     return sortOrder === "asc" ? (av > bv ? 1 : -1) : av < bv ? 1 : -1;
   });
