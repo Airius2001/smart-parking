@@ -11,7 +11,6 @@ import Image from "next/image";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";

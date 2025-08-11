@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import LeftImagePanel from "./component/LeftImgPannel";
 import WebtitleImg from "./component/WebtitleImg";
 import { useRouter } from "next/navigation";

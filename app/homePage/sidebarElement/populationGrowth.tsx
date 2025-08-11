@@ -1,18 +1,17 @@
 import PopulationChart from "@/app/component/PopulationChart";
 import PopulationTable from "@/app/component/PopulationTable";
 import populationData from "@/public/data/population.json";
-import Link from "next/link";
 
-function format(n: number) {
-  return n.toLocaleString();
-}
+// function format(n: number) {
+//   return n.toLocaleString();
+// }
 
 export default function PopulationPage() {
   const first = populationData[0].population; // 2020
   const last = populationData[populationData.length - 1].population; // 2024
-  const delta = last - first;
+  // const delta = last - first;
   const years = populationData.length - 1;
-  const cagr = Math.pow(last / first, 1 / years) - 1;
+  // const cagr = Math.pow(last / first, 1 / years) - 1
 
   return (
     <main
