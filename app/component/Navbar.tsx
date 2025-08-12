@@ -78,15 +78,16 @@ export default function Navbar() {
           </IconButton>
         ) : (
           <Box>
-            <Button startIcon={<HomeIcon />} sx={{ color: "white" }}>
+            <Button startIcon={<HomeIcon />} sx={{ color: "white" }} disabled>
               Home
             </Button>
-            <Button startIcon={<InfoIcon />} sx={{ color: "white" }}>
+            <Button startIcon={<InfoIcon />} sx={{ color: "white" }} disabled>
               About
             </Button>
             <Button
               startIcon={<ConnectWithoutContactIcon />}
               sx={{ color: "white" }}
+              disabled
             >
               Contact Us
             </Button>

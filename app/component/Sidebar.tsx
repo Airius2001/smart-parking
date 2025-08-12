@@ -103,6 +103,7 @@ export default function Sidebar({ mode, setMode, setActiveTab }: SidebarProps) {
               component="a"
               href="#ParkingAvailability"
               onClick={() => setActiveTab("ParkingAvailability")}
+              disabled
             >
               <ListItemIcon>
                 <LocalParkingIcon sx={{ color: getIconColor() }} />
@@ -117,11 +118,12 @@ export default function Sidebar({ mode, setMode, setActiveTab }: SidebarProps) {
               component="a"
               href="#ParkingAlarm"
               onClick={() => setActiveTab("ParkingAlarm")}
+              disabled
             >
               <ListItemIcon>
                 <AccessAlarmIcon sx={{ color: getIconColor() }} />
               </ListItemIcon>
-              <ListItemText primary="parking Alarm" />
+              <ListItemText primary="Parking Alarm" />
             </ListItemButton>
           </ListItem>
 
