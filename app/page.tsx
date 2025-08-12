@@ -31,11 +31,11 @@ export default function Home() {
         alignItems: "center",
       }}
     >
-      {/*  Webtitle */}
+      {/* Webtitle */}
       <Fade in={show} timeout={1000}>
         <Box
           sx={{
-            display: "flex",
+            display: { xs: "none", md: "flex" },
             alignItems: "center",
             mb: 4,
             marginTop: "-750px",
@@ -56,9 +56,16 @@ export default function Home() {
           maxWidth: 1200,
         }}
       >
-        {/* logo part */}
+        {/* logo part - The small screen is displayed in the upper left corner. */}
         <Grow in={show} timeout={1000}>
-          <Box sx={{ width: { xs: "80%", md: "30%" } }}>
+          <Box
+            sx={{
+              width: { xs: "80%", md: "30%" },
+              display: "flex",
+              justifyContent: { xs: "flex-start", md: "center" },
+              mt: { xs: -6, md: 0 },
+            }}
+          >
             <LeftImagePanel imageSrc="/next.svg" altText="Next.js Logo" />
           </Box>
         </Grow>
