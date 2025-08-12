@@ -76,8 +76,8 @@ export default function PopulationTable({
   const arrow = (key: "year" | "population" | "growth") =>
     sortKey === key
       ? sortOrder === "asc"
-        ? " (Ascending order) "
-        : " (Descending order) "
+        ? " (Asc order) "
+        : " (Dsc order) "
       : "";
 
   return (
